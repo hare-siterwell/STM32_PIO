@@ -46,3 +46,8 @@ void app_main(void *p_arg) {
   OSTaskCreate(&Task4TCB, "Task4", led_task, 0, 5, Task4Stk, 512 / 10, 512, 0,
                0, 0, OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR, &err);
 }
+
+uint32_t HAL_GetTick(void) {
+  OS_ERR os_err;
+  return OSTimeGet(&os_err);
+}
