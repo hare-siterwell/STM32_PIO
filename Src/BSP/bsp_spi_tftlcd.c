@@ -7,8 +7,7 @@
 #include "font.h"
 #include "jpeg.h"
 
-extern SPI_HandleTypeDef hspi6;
-#define LCD_SPI &hspi6 // LCD底层SPI
+#define LCD_SPI SPI6 // LCD底层SPI
 
 // LCD缓存大小设置，修改此值时请注意!!
 // 修改这两个值时可能会影响 LCD_Clear/LCD_Fill/LCD_DrawLine
@@ -25,7 +24,20 @@ u16 BACK_COLOR = BLACK; // 背景颜色
  * @param size 发送数据大小
  */
 static void LCD_SPI_Send(u8 *data, u16 size) {
-  HAL_SPI_Transmit(LCD_SPI, data, size, 1000);
+  LL_SPI_SetTransferSize(LCD_SPI, size);
+  LL_SPI_Enable(LCD_SPI);
+  LL_SPI_StartMasterTransfer(LCD_SPI);
+  for (u16 i = 0; i < size; i++) {
+    while (!LL_SPI_IsActiveFlag_TXP(LCD_SPI))
+      ;
+    LL_SPI_TransmitData8(LCD_SPI, data[i]);
+  }
+  while (!LL_SPI_IsActiveFlag_EOT(LCD_SPI))
+    ;
+  LL_SPI_ClearFlag_EOT(LCD_SPI);
+  LL_SPI_ClearFlag_TXTF(LCD_SPI);
+  LL_SPI_SuspendMasterTransfer(LCD_SPI);
+  LL_SPI_Disable(LCD_SPI);
 }
 
 /**
