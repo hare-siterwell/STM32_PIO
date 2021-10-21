@@ -1,17 +1,17 @@
 /**
- * @file bsp_spi_tftlcd.h
+ * @file tftlcd.h
  * @brief This file contains all the function prototypes for
- *        the bsp_spi_tftlcd.c file
+ *        the tftlcd.c file
  */
 
-#ifndef __BSP_SPI_TFTLCD_H
-#define __BSP_SPI_TFTLCD_H
+#ifndef __TFTLCD_H
+#define __TFTLCD_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "includes.h"
+#include "bsp.h"
 
 extern u16 POINT_COLOR; // 默认画笔颜色
 extern u16 BACK_COLOR;  // 默认背景颜色
@@ -25,6 +25,16 @@ extern u16 BACK_COLOR;  // 默认背景颜色
 #define LCD_WIDTH 240
 #define LCD_HEIGHT 135
 #endif
+
+#define LCD_PWR(n)                                                             \
+  n ? LL_GPIO_SetOutputPin(LCD_PWR_GPIO_Port, LCD_PWR_Pin)                     \
+    : LL_GPIO_ResetOutputPin(LCD_PWR_GPIO_Port, LCD_PWR_Pin)
+#define LCD_RST(n)                                                             \
+  n ? LL_GPIO_SetOutputPin(LCD_RST_GPIO_Port, LCD_RST_Pin)                     \
+    : LL_GPIO_ResetOutputPin(LCD_RST_GPIO_Port, LCD_RST_Pin)
+#define LCD_DC(n)                                                              \
+  n ? LL_GPIO_SetOutputPin(LCD_DC_GPIO_Port, LCD_DC_Pin)                       \
+    : LL_GPIO_ResetOutputPin(LCD_DC_GPIO_Port, LCD_DC_Pin)
 
 enum Colors {
   WHITE = 0xFFFF,
@@ -50,16 +60,6 @@ enum Colors {
   LBBLUE = 0X2B12      // 浅棕蓝色(选择条目的反色)
 };
 
-#define LCD_PWR(n)                                                             \
-  n ? LL_GPIO_SetOutputPin(LCD_PWR_GPIO_Port, LCD_PWR_Pin)                     \
-    : LL_GPIO_ResetOutputPin(LCD_PWR_GPIO_Port, LCD_PWR_Pin)
-#define LCD_RST(n)                                                             \
-  n ? LL_GPIO_SetOutputPin(LCD_RST_GPIO_Port, LCD_RST_Pin)                     \
-    : LL_GPIO_ResetOutputPin(LCD_RST_GPIO_Port, LCD_RST_Pin)
-#define LCD_DC(n)                                                              \
-  n ? LL_GPIO_SetOutputPin(LCD_DC_GPIO_Port, LCD_DC_Pin)                       \
-    : LL_GPIO_ResetOutputPin(LCD_DC_GPIO_Port, LCD_DC_Pin)
-
 void LCD_Init(void);                   // 初始化
 void LCD_DisplayOn(void);              // 开显示
 void LCD_DisplayOff(void);             // 关显示
@@ -83,10 +83,8 @@ void LCD_Show_Image(u16 x, u16 y, u16 width, u16 height,
 void Display_ALIENTEK_LOGO();     // 显示ALIENTEK LOGO
 void LCD_Draw_Point1(u16 x, u16 y, u8 t);
 
-void lcd_task(void *p_arg);
-
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __BSP_SPI_TFTLCD_H */
+#endif /* __TFTLCD_H */

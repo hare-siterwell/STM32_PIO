@@ -1,9 +1,9 @@
 /**
- * @file bsp_spi_tftlcd.c
+ * @file tftlcd.c
  * @brief TFTLCD驱动
  */
 
-#include "bsp_spi_tftlcd.h"
+#include "tftlcd.h"
 #include "font.h"
 #include "jpeg.h"
 

@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-#include "includes.h"
+#include "bsp.h"
 
 #define USART_RXSIZE 1024
 struct UsartRx {
@@ -19,10 +19,7 @@ struct UsartRx {
   u16 len;              // Received length
   u8 buf[USART_RXSIZE]; // Received buffer
 };
-extern struct UsartRx lur1, ur3;
-
-void lpuart1_task(void *p_arg);
-void usart3_task(void *p_arg);
+extern struct UsartRx lur1, ur1;
 
 void USART_Enable(void);
 void USART_RxIdleCallback(USART_TypeDef *USARTx);

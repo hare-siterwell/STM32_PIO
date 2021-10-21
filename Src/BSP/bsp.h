@@ -10,8 +10,9 @@
 extern "C" {
 #endif
 
-#include "main.h"
 #include "os.h"
+
+#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

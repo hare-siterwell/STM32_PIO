@@ -1,9 +1,9 @@
 /**
- * @file bsp_tim_a4988.c
+ * @file a4988.c
  * @brief 步进电机驱动
  */
 
-#include "bsp_tim_a4988.h"
+#include "a4988.h"
 
 #define FRAC_MAX 30000 // 频率阈值
 struct Motor motor1;

@@ -3,7 +3,7 @@
  * @brief Application task body
  */
 
-#include "bsp_tim_a4988.h"
+#include "a4988.h"
 #include "bsp_usart.h"
 
 static void verify_buf(uc8 *kBuf, uc8 *kFormatString);
@@ -42,11 +42,11 @@ void lpuart1_task(void *p_arg) {
 }
 
 /**
- * @brief USART3 communication with BLE
+ * @brief USART1 communication with BLE
  */
-void usart3_task(void *p_arg) {
+void usart1_task(void *p_arg) {
   OS_ERR err;
-  OSSemCreate(&ur3.sta, "ur3 sta", 0, &err);
+  OSSemCreate(&ur1.sta, "ur1 sta", 0, &err);
   uc8 kFormatString[] = "\
   {\
     \"to\": %d,\
@@ -56,13 +56,13 @@ void usart3_task(void *p_arg) {
     \"mo\": %hu\
   }"; // 蓝牙数据传输受限
 
-  printf("TaskUsart3 running!\r\n");
+  printf("TaskUsart1 running!\r\n");
   while (1) {
-    OSSemPend(&ur3.sta, 0, OS_OPT_PEND_BLOCKING, 0, &err);
+    OSSemPend(&ur1.sta, 0, OS_OPT_PEND_BLOCKING, 0, &err);
 
-    verify_buf(ur3.buf, kFormatString);
+    verify_buf(ur1.buf, kFormatString);
 
-    USART_ReEnable(USART3);
+    USART_ReEnable(USART1);
   }
 }
 

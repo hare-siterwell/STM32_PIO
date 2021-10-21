@@ -3,7 +3,7 @@
  * @brief Application task body
  */
 
-#include "bsp_spi_tftlcd.h"
+#include "tftlcd.h"
 
 /**
  * @brief LCD task
