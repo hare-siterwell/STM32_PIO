@@ -1,2 +1,8 @@
 .pio
 .vscode
+.cache/
+build/
+Drivers/
+MDK-ARM/
+.mxproject
+compile_flags.txt
